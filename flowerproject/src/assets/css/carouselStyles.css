@@ -1,0 +1,114 @@
+.carousel {
+  position: relative;
+  height: 800px;
+  overflow: hidden;
+  margin-top: -50px;
+  background-color: #f4f4f4;
+}
+
+.carousel .list {
+  position: absolute;
+  width: 1140px;
+  max-width: 90%;
+  height: 80%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.carousel .list .item {
+  position: absolute;
+  left: 0;
+  width: 70%;
+  height: 100%;
+  transition: left 0.5s, opacity 0.5s, width 0.5s;
+}
+
+.carousel .list .item img {
+  width: 50%;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: right 1.5s;
+}
+
+.carousel .list .item .introduce {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.carousel .list .item:nth-child(2) .introduce {
+  opacity: 1;
+  pointer-events: auto;
+  width: 400px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: opacity 0.5s;
+}
+
+.carousel .list .item .introduce .title {
+  font-size: 2em;
+  font-weight: 500;
+  line-height: 1em;
+}
+
+.carousel .list .item .introduce .topic {
+  font-size: 4em;
+  font-weight: 500;
+}
+
+.carousel .list .item .introduce .des {
+  font-size: small;
+  color: #5559;
+}
+
+.carousel .list .item .introduce .seeMore {
+  font-family: 'Poppins', sans-serif;
+  margin-top: 1.2em;
+  padding: 5px 0;
+  border: none;
+  border-bottom: 1px solid #555;
+  background-color: transparent;
+  font-weight: bold;
+  letter-spacing: 3px;
+  transition: background 0.5s;
+}
+
+.carousel .list .item .introduce .seeMore:hover {
+  background: #eee;
+}
+
+.carousel::before {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 300px;
+  background-image: linear-gradient(70deg, #dc422a, blue);
+  filter: blur(150px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-10%, -50%);
+  transition: 1s;
+}
+
+.carousel.showDetail::before {
+  transform: translate(-100%, -50%) rotate(90deg);
+  filter: blur(130px);
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 991px) {
+  .carousel .list .item {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .carousel {
+    height: 600px;
+  }
+  .carousel .list .item {
+    width: 100%;
+  }
+}
