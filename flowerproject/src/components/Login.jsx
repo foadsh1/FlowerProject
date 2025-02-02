@@ -1,47 +1,56 @@
 import React, { useState } from "react";
-import "../assets/css/globalStyles.css";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate for redirection
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setSuccess("");
     setIsSubmitting(true);
 
-    // Basic Validation
-    if (!formData.email || !formData.password) {
-      setError("Please fill in all fields.");
-      setIsSubmitting(false);
-      return;
-    }
+    try {
+      const response = await fetch("http://localhost:5000/auth/signin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-    // Mock API Call
-    setTimeout(() => {
+      const data = await response.json();
+
+      if (response.ok) {
+        setSuccess("Logged in successfully!");
+        localStorage.setItem("user", JSON.stringify(data.user)); // Save user info in localStorage
+        navigate("/home"); // Redirect to the home page
+      } else {
+        setError(data.error);
+      }
+    } catch (err) {
+      setError("An error occurred. Please try again.");
+    } finally {
       setIsSubmitting(false);
-      alert("Logged in successfully!");
-    }, 1000);
+    }
   };
 
   return (
     <div className="login-container">
-      <h1>Log In</h1>
+      <h1>Sign In</h1>
       <form className="login-form" onSubmit={handleSubmit}>
         {error && <div className="error">{error}</div>}
+        {success && <div className="success">{success}</div>}
         <div className="form-group">
           <label htmlFor="email">Email Address</label>
           <input
@@ -65,12 +74,9 @@ const Login = () => {
           />
         </div>
         <button className="btn" type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Logging in..." : "Log In"}
+          {isSubmitting ? "Logging in..." : "Sign In"}
         </button>
       </form>
-      <p className="signup-link">
-        Don't have an account? <a href="/signup">Sign Up</a>
-      </p>
     </div>
   );
 };

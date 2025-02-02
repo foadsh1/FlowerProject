@@ -112,3 +112,32 @@
     width: 100%;
   }
 }
+.content {
+  margin-top: 20px;
+}
+
+.content .item.active {
+  text-align: center;
+}
+
+.content .des {
+  margin: 10px 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #e87c35;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #d0672b;
+}
+
