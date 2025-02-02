@@ -1,0 +1,95 @@
+/* General Styles for Record List */
+.record-list {
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.record-list h1 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #444;
+}
+
+.record-list button {
+  display: block;
+  margin: 10px auto 20px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #28a745; /* Green button */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.record-list button:hover {
+  background-color: #218838;
+}
+
+/* Styles for Individual Records */
+.records {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.record-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.record-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.record-item h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin: 0;
+}
+
+.record-item p {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+}
+
+/* Styles for Edit Button */
+.record-item button {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  color: #fff;
+  background-color: #007bff; /* Blue button */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.record-item button:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .record-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .record-item button {
+    align-self: flex-end;
+  }
+}

@@ -1,0 +1,199 @@
+/* General Container Styling */
+.product-list,
+.add-product,
+.edit-product {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #ffffff, #f3f3f3);
+  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.1), -6px -6px 12px rgba(255, 255, 255, 0.9);
+}
+
+/* Common Heading Styles */
+.product-list h1,
+.add-product h1,
+.edit-product h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #444;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+/* Form Group Styling for Add/Edit Product */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  color: #666;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1), inset -2px -2px 5px rgba(255, 255, 255, 0.7);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
+  outline: none;
+}
+
+/* Image Styling */
+.product-item img,
+.preview-image {
+  width: 100%;
+  max-width: 150px;
+  max-height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+/* Product List Grid Layout */
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.product-item {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  background: linear-gradient(145deg, #ffffff, #f3f3f3);
+  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.1), -6px -6px 12px rgba(255, 255, 255, 0.9);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.15), -8px -8px 16px rgba(255, 255, 255, 0.9);
+}
+
+.product-item h3 {
+  font-size: 1.2rem;
+  margin: 10px 0 5px;
+  color: #444;
+}
+
+.product-item p {
+  font-size: 1rem;
+  margin: 0;
+  color: #666;
+}
+
+.product-item button {
+  padding: 10px 15px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.product-item button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Buttons for Add/Edit Product */
+.add-product .btn,
+.edit-product .btn {
+  display: block;
+  width: 100%;
+  padding: 12px 18px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #28a745;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.add-product .btn:hover,
+.edit-product .btn:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+/* Error Message */
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .product-item img,
+  .preview-image {
+    max-width: 100px;
+    max-height: 100px;
+  }
+
+  .products {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+
+  .add-product,
+  .edit-product,
+  .product-list {
+    padding: 15px;
+  }
+
+  .product-item h3 {
+    font-size: 1rem;
+  }
+
+  .product-item p {
+    font-size: 0.9rem;
+  }
+}
+/* Buttons for Add/Edit Product */
+.add-product .btn,
+.edit-product .btn,
+.product-list button {
+  display: block;
+  max-width: 200px; /* Limit the width of the button */
+  margin: 10px auto; /* Center the button */
+  padding: 8px 12px; /* Smaller padding for a compact look */
+  font-size: 0.9rem; /* Reduce font size */
+  font-weight: bold;
+  color: #fff;
+  background-color: #28a745;
+  border: none;
+  border-radius: 6px; /* Slightly rounded corners */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.add-product .btn:hover,
+.edit-product .btn:hover,
+.product-list button:hover {
+  background-color: #218838;
+  transform: scale(1.03); /* Slight hover effect */
+}
+
