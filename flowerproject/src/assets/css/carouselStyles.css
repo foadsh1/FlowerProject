@@ -1,143 +1,141 @@
-.carousel {
+/* ✅ General Carousel Styling */
+.carousel-container {
+  text-align: center;
+  padding: 20px;
+  background-color: #fffaf0; /* Light floral background */
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  margin: auto;
+}
+
+.carousel-title {
+  font-size: 2rem;
+  color: #d63384;
+  margin-bottom: 15px;
+}
+
+/* ✅ Carousel Wrapper */
+.carousel-wrapper {
   position: relative;
-  height: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* ✅ Carousel Images */
+.carousel-images {
+  display: flex;
   overflow: hidden;
-  margin-top: -50px;
-  background-color: #f4f4f4;
+  width: 80%;
+  justify-content: center;
 }
 
-.carousel .list {
-  position: absolute;
-  width: 1140px;
-  max-width: 90%;
-  height: 80%;
-  left: 50%;
-  transform: translateX(-50%);
+.carousel-item {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
 }
 
-.carousel .list .item {
-  position: absolute;
-  left: 0;
-  width: 70%;
-  height: 100%;
-  transition: left 0.5s, opacity 0.5s, width 0.5s;
+.carousel-item.active {
+  display: flex;
 }
 
-.carousel .list .item img {
-  width: 50%;
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  transition: right 1.5s;
+/* ✅ Image & Caption */
+.carousel-img {
+  width: 250px;
+  height: 250px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
-.carousel .list .item .introduce {
-  opacity: 0;
-  pointer-events: none;
+.carousel-img:hover {
+  transform: scale(1.05);
 }
 
-.carousel .list .item:nth-child(2) .introduce {
-  opacity: 1;
-  pointer-events: auto;
-  width: 400px;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  transition: opacity 0.5s;
-}
-
-.carousel .list .item .introduce .title {
-  font-size: 2em;
-  font-weight: 500;
-  line-height: 1em;
-}
-
-.carousel .list .item .introduce .topic {
-  font-size: 4em;
-  font-weight: 500;
-}
-
-.carousel .list .item .introduce .des {
-  font-size: small;
-  color: #5559;
-}
-
-.carousel .list .item .introduce .seeMore {
-  font-family: 'Poppins', sans-serif;
-  margin-top: 1.2em;
-  padding: 5px 0;
-  border: none;
-  border-bottom: 1px solid #555;
-  background-color: transparent;
+.carousel-caption {
+  margin-top: 10px;
+  font-size: 1.1rem;
   font-weight: bold;
-  letter-spacing: 3px;
-  transition: background 0.5s;
+  color: #333;
 }
 
-.carousel .list .item .introduce .seeMore:hover {
-  background: #eee;
+/* ✅ Navigation Buttons */
+.carousel-btn {
+  background-color: #d63384;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 2rem;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.3s ease;
 }
 
-.carousel::before {
-  content: '';
+.carousel-btn:hover {
+  background-color: #b02a6c;
+}
+
+.prev {
   position: absolute;
-  width: 500px;
-  height: 300px;
-  background-image: linear-gradient(70deg, #dc422a, blue);
-  filter: blur(150px);
-  top: 50%;
-  left: 50%;
-  transform: translate(-10%, -50%);
-  transition: 1s;
+  left: 10px;
 }
 
-.carousel.showDetail::before {
-  transform: translate(-100%, -50%) rotate(90deg);
-  filter: blur(130px);
+.next {
+  position: absolute;
+  right: 10px;
 }
 
-/* Responsive Styles */
-@media screen and (max-width: 991px) {
-  .carousel .list .item {
-    width: 90%;
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .carousel {
-    height: 600px;
-  }
-  .carousel .list .item {
-    width: 100%;
-  }
-}
-.content {
+/* ✅ Welcome Content */
+.carousel-content {
   margin-top: 20px;
 }
 
-.content .item.active {
-  text-align: center;
+.carousel-content h1 {
+  font-size: 2.2rem;
+  color: #d63384;
 }
 
-.content .des {
-  margin: 10px 0;
-  font-size: 1rem;
+.carousel-content p {
+  font-size: 1.2rem;
   color: #555;
 }
 
-button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: #e87c35;
-  border: none;
-  border-radius: 5px;
+.carousel-discover-btn {
+  background-color: #d63384;
   color: white;
   font-size: 1rem;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background 0.3s;
 }
 
-button:hover {
-  background-color: #d0672b;
+.carousel-discover-btn:hover {
+  background-color: #b02a6c;
 }
 
+/* ✅ Responsive Design */
+@media (max-width: 768px) {
+  .carousel-images {
+    width: 100%;
+  }
+
+  .carousel-img {
+    width: 200px;
+    height: 200px;
+  }
+
+  .carousel-title {
+    font-size: 1.8rem;
+  }
+
+  .carousel-btn {
+    font-size: 1.5rem;
+    padding: 8px 12px;
+  }
+}

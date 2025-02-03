@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "../assets/css/productListStyles.css";
+
 
 const ProductList = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/products") // ✅ Fetch from backend
+    fetch("http://localhost:5000/products") //  Fetch from backend
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((error) => console.error("Error fetching products:", error));
@@ -30,7 +32,7 @@ const ProductList = () => {
             <img
               src={product.image}
               alt={product.name}
-              style={{ width: "100px", height: "100px", objectFit: "cover" }} // ✅ Display image
+              style={{ width: "100px", height: "100px", objectFit: "cover" }} //  Display image
             />
             <h3>{product.name}</h3>
             <p>${product.price}</p>

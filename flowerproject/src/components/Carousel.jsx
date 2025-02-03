@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { useNavigate } from "react-router-dom";
 import "../assets/css/sliderStyles.css";
 import "../assets/css/carouselStyles.css";
 
@@ -14,9 +14,9 @@ import img6 from "../assets/images/img6.png";
 const Carousel = () => {
   const carouselRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const navigate = useNavigate(); // Initialize useNavigate for navigation
+  const navigate = useNavigate();
 
-  // Array of images with details
+  //  Array of images with details
   const images = [
     { id: 1, src: img1, name: "Rose Bouquet", price: "$25" },
     { id: 2, src: img2, name: "Tulip Arrangement", price: "$30" },
@@ -26,52 +26,76 @@ const Carousel = () => {
     { id: 6, src: img6, name: "Sunflower Pack", price: "$40" },
   ];
 
+  // ✅ Rotate the carousel
   const rotateCarousel = (direction) => {
-    if (direction === "next") {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    } else {
-      setCurrentIndex(
-        (prevIndex) => (prevIndex - 1 + images.length) % images.length
-      );
-    }
+    setCurrentIndex((prevIndex) =>
+      direction === "next"
+        ? (prevIndex + 1) % images.length
+        : (prevIndex - 1 + images.length) % images.length
+    );
   };
 
+  //  Navigate to products with selected product details
   const goToProducts = (selectedProduct = null) => {
-    navigate("/products", { state: { selectedProduct } }); // Navigate to product list with optional product details
+    navigate("/products", { state: { selectedProduct } });
   };
 
   return (
-    <div className="slider">
-      <div className="title">Flower Carousel</div>
-      <div
-        className="images"
-        ref={carouselRef}
-        style={{ "--rotate": `${currentIndex * -60}deg` }}
-      >
-        {images.map((product, index) => (
-          <div
-            className="item"
-            style={{ "--i": index }}
-            key={product.id}
-            onClick={() => goToProducts(product)} // Navigate with selected product details
-          >
-            <img src={product.src} alt={product.name} />
-          </div>
-        ))}
-      </div>
-      <div className="content">
-        <div className="item active">
-          <h1>Welcome</h1>
-          <p className="des">Explore our amazing flower collection.</p>
-          <button onClick={() => goToProducts()}>Discover More</button>
+    <div className="carousel-container">
+      <h2 className="carousel-title">🌸 Flower Carousel 🌸</h2>
+
+      {/*  Carousel Images */}
+      <div className="carousel-wrapper">
+        <button
+          className="carousel-btn prev"
+          onClick={() => rotateCarousel("prev")}
+        >
+          &lt;
+        </button>
+
+        <div className="carousel-images">
+          {images.map((product, index) => (
+            <div
+              className={`carousel-item ${
+                index === currentIndex ? "active" : ""
+              }`}
+              key={product.id}
+              onClick={() => goToProducts(product)}
+            >
+              <img
+                src={product.src}
+                alt={product.name}
+                className="carousel-img"
+              />
+              <div className="carousel-caption">
+                <h3>{product.name}</h3>
+                <p>{product.price}</p>
+              </div>
+            </div>
+          ))}
         </div>
+
+        <button
+          className="carousel-btn next"
+          onClick={() => rotateCarousel("next")}
+        >
+          &gt;
+        </button>
       </div>
-      <button id="prev" onClick={() => rotateCarousel("prev")}>
-        &lt;
-      </button>
-      <button id="next" onClick={() => rotateCarousel("next")}>
-        &gt;
-      </button>
+
+      {/*  Welcome Message */}
+      <div className="carousel-content">
+        <h1>Welcome to Flora</h1>
+        <p>
+          Explore our amazing flower collection and find the perfect bouquet.
+        </p>
+        <button
+          className="carousel-discover-btn"
+          onClick={() => goToProducts()}
+        >
+          Discover More
+        </button>
+      </div>
     </div>
   );
 };

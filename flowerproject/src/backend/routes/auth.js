@@ -1,27 +1,36 @@
 const express = require("express");
-const db = require("../db"); // Database connection
+const bcrypt = require("bcrypt"); 
+const db = require("../db");
 const router = express.Router();
 
-// Sign-Up Route
-router.post("/signup", (req, res) => {
+//  1. User Signup (Hash Password Before Storing)
+router.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
 
   if (!name || !email || !password) {
     return res.status(400).json({ error: "All fields are required." });
   }
 
-  const sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
-  db.query(sql, [name, email, password], (err, result) => {
-    if (err) {
-      if (err.code === "ER_DUP_ENTRY") {
-        return res.status(400).json({ error: "Email already exists." });
+  try {
+    //  Hash password before saving
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
+    db.query(sql, [name, email, hashedPassword], (err, result) => {
+      if (err) {
+        if (err.code === "ER_DUP_ENTRY") {
+          return res.status(400).json({ error: "Email already exists." });
+        }
+        return res.status(500).json({ error: "Database error." });
       }
-      return res.status(500).json({ error: "Database error." });
-    }
-    res.json({ message: "User registered successfully." });
-  });
+      res.json({ message: "User registered successfully." });
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Server error." });
+  }
 });
-// Sign-In Route
+
+//  2. User Signin (Compare Hashed Password)
 router.post("/signin", (req, res) => {
   const { email, password } = req.body;
 
@@ -31,14 +40,9 @@ router.post("/signin", (req, res) => {
       .json({ error: "Both email and password are required." });
   }
 
-  const sql =
-    "SELECT id, NAME AS name, email, PASSWORD AS password FROM users WHERE email = ?";
-  db.query(sql, [email], (err, results) => {
-    if (err) {
-      return res.status(500).json({ error: "Database error." });
-    }
-
-    console.log("Results from database:", results);
+  const sql = "SELECT id, name, email, password FROM users WHERE email = ?";
+  db.query(sql, [email], async (err, results) => {
+    if (err) return res.status(500).json({ error: "Database error." });
 
     if (results.length === 0) {
       return res.status(400).json({ error: "User not found." });
@@ -46,10 +50,9 @@ router.post("/signin", (req, res) => {
 
     const user = results[0];
 
-    console.log("Provided password:", password);
-    console.log("Stored password:", user.password);
-
-    if (user.password !== password) {
+    //  Compare hashed password with entered password
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
       return res.status(400).json({ error: "Invalid credentials." });
     }
 
@@ -59,6 +62,5 @@ router.post("/signin", (req, res) => {
     });
   });
 });
-
 
 module.exports = router;

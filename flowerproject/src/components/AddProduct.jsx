@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../assets/css/productFormStyles.css";
 
 const AddProduct = () => {
   const navigate = useNavigate();
@@ -18,10 +19,10 @@ const AddProduct = () => {
     const file = e.target.files[0];
     if (!file) return;
 
-    // ✅ Preview image
+    //  Preview image
     setPreview(URL.createObjectURL(file));
 
-    // ✅ Upload image to server
+    //  Upload image to server
     const formData = new FormData();
     formData.append("image", file);
 
