@@ -1,32 +1,58 @@
 const express = require("express");
 const path = require("path");
+const cors = require("cors");
+const multer = require("multer");
+const fs = require("fs");
 const authRoutes = require("./routes/auth");
+const productRoutes = require("./routes/products");
 
 const app = express();
 const PORT = 5000;
-  
-// Middleware
-app.use(express.json()); // Parse JSON requests
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded requests
-// Serve React build files (optional for production)
-console.log(path.join(__dirname, "../../build"));
+
+// ✅ Create `uploads/` folder if it doesn't exist
+const uploadDir = path.join(__dirname, "uploads");
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+// ✅ Configure Multer for Image Uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadDir); // ✅ Save images in `uploads/` folder
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname); // ✅ Unique filename
+  },
+});
+const upload = multer({ storage });
+
+// ✅ Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../../build")));
 
-// API Routes
+// ✅ Serve Uploaded Images
+app.use("/uploads", express.static(uploadDir));
+
+// ✅ API Routes
 app.use("/auth", authRoutes);
+app.use("/products", productRoutes);
 
+// ✅ Image Upload Route
+app.post("/upload", upload.single("image"), (req, res) => {
+  if (!req.file) return res.status(400).json({ error: "No file uploaded" });
 
-// Fallback for React app
+  // ✅ Return the uploaded file URL
+  res.json({ imageUrl: `/uploads/${req.file.filename}` });
+});
+
+// ✅ Fallback for React frontend
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../../build", "index.html"));
 });
-app.post("/auth/signin", (req, res) => {
-  // Process login and send JSON response
-  res.json({ message: "Logged in successfully", user: userData });
-});
 
-
-// Start the server
+// ✅ Start the server
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });

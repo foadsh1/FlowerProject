@@ -16,7 +16,12 @@ const RoutesFile = () => {
       <Route path="/home" element={<Home />} />
       <Route path="/products" element={<ProductList />} />
       <Route path="/products/add" element={<AddProduct />} />
-      <Route path="/products/edit" element={<EditProduct />} />
+      <Route path="/products/edit/:id" element={<EditProduct />} />
+      <Route
+        path="/products/delete/:id"
+        element={<Navigate to="/products" />}
+      />{" "}
+      {/* ✅ New delete route */}
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/login" element={<Login />} />
