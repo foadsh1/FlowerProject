@@ -1,0 +1,274 @@
+/* Container */
+.shop-products-container, .shop-owner-profile {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.shop-products-container h1, .shop-owner-profile h1 {
+  font-size: 2.2rem;
+  color: #d63384;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* Buttons */
+.btn {
+  padding: 12px 16px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 6px;
+  transition: background 0.3s ease-in-out;
+  
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.add-product-btn {
+  background: #28a745;
+  color: white;
+}
+
+.add-product-btn:hover {
+  background: #218838;
+}
+
+.manage-products-btn {
+  background: #007bff;
+  color: white;
+  margin-top: 10px;
+}
+
+.manage-products-btn:hover {
+  background: #0056b3;
+}
+
+/* Grid Layout */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  padding-top: 20px;
+}
+
+/* Product Card */
+.product-card {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.product-card:hover {
+  transform: scale(1.04);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+/* Product Image */
+.product-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+/* Product Details */
+.product-name {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #333;
+  margin: 12px 0 5px;
+}
+
+.product-price {
+  font-size: 1.1rem;
+  color: #777;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+/* Edit & Delete Buttons */
+.edit-btn,
+.delete-btn {
+  padding: 10px 14px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: bold;
+  border-radius: 6px;
+  transition: background 0.3s ease-in-out;
+}
+
+.edit-btn {
+  background: #ffc107;
+  color: black;
+}
+
+.edit-btn:hover {
+  background: #e0a800;
+}
+
+.delete-btn {
+  background: #dc3545;
+  color: white;
+}
+
+.delete-btn:hover {
+  background: #c82333;
+}
+
+/* Empty Products Message */
+.no-products {
+  font-size: 1.2rem;
+  color: #777;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+/* Shop Owner Profile Page */
+.shop-owner-profile {
+  text-align: center;
+  margin-top: 30px;
+  padding: 20px;
+}
+
+.shop-owner-info {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 600px;
+  margin: auto;
+}
+
+.shop-owner-info h2 {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.shop-owner-info p {
+  font-size: 1rem;
+  color: #555;
+  margin: 5px 0;
+}
+
+/* Shop Image */
+.shop-owner-image {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  border-radius: 10px;
+  margin-top: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Shared Styling for Product Forms (Add & Edit) */
+.shop-profile-form {
+  max-width: 600px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+  color: #444;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+/* Product Image Preview */
+.preview-image {
+  width: 100%;
+  max-width: 250px; /* Limit the width */
+  max-height: 180px; /* Limit the height */
+  object-fit: cover;
+  border-radius: 10px;
+  margin-top: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Responsive Media Queries */
+@media screen and (max-width: 768px) {
+  .shop-products-container, .shop-owner-profile {
+    padding: 15px;
+  }
+
+  .shop-profile-form {
+    padding: 15px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 0.95rem;
+    padding: 8px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .btn {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .shop-products-container h1, .shop-owner-profile h1 {
+    font-size: 1.8rem;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
+  .btn {
+    font-size: 0.85rem;
+    padding: 8px;
+  }
+
+  .product-image,
+  .preview-image {
+    max-width: 220px;
+    max-height: 160px;
+  }
+
+  .shop-owner-image {
+    max-width: 200px;
+  }
+}

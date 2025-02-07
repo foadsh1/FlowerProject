@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../assets/css/sliderStyles.css";
+
 import "../assets/css/carouselStyles.css";
 
 // Import images from assets
@@ -37,7 +37,7 @@ const Carousel = () => {
 
   //  Navigate to products with selected product details
   const goToProducts = (selectedProduct = null) => {
-    navigate("/products", { state: { selectedProduct } });
+    navigate("/flower-shops", { state: { selectedProduct } });
   };
 
   return (

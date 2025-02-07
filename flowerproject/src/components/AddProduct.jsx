@@ -1,15 +1,22 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../assets/css/productFormStyles.css";
+import "../assets/css/shopOwnerProducts.css"; // Reuse the same styles
 
 const AddProduct = () => {
   const navigate = useNavigate();
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const shopOwnerId = storedUser ? storedUser.id : null;
+
   const [formData, setFormData] = useState({
     name: "",
     price: "",
     image: null,
   });
+
   const [preview, setPreview] = useState(null);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,61 +26,108 @@ const AddProduct = () => {
     const file = e.target.files[0];
     if (!file) return;
 
-    //  Preview image
     setPreview(URL.createObjectURL(file));
 
-    //  Upload image to server
-    const formData = new FormData();
-    formData.append("image", file);
+    const imageForm = new FormData();
+    imageForm.append("image", file);
 
-    const response = await fetch("http://localhost:5000/upload", {
-      method: "POST",
-      body: formData,
-    });
+    try {
+      const response = await fetch("http://localhost:5000/upload", {
+        method: "POST",
+        body: imageForm,
+      });
 
-    const data = await response.json();
-    if (data.imageUrl) {
-      setFormData((prev) => ({ ...prev, image: data.imageUrl }));
+      const data = await response.json();
+      if (data.imageUrl) {
+        setFormData((prev) => ({ ...prev, image: data.imageUrl }));
+      }
+    } catch (err) {
+      setError("Failed to upload image.");
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    fetch("http://localhost:5000/products/add", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    }).then(() => navigate("/products"));
+    if (!shopOwnerId) {
+      setError("You must be logged in as a shop owner to add products.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setError("");
+    setSuccess("");
+
+    const newProduct = { ...formData, shop_owner_id: shopOwnerId };
+
+    try {
+      const response = await fetch("http://localhost:5000/products/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newProduct),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setSuccess("Product added successfully!");
+        setTimeout(() => navigate("/shop-owner/products"), 2000);
+      } else {
+        setError(data.error || "Failed to add product.");
+      }
+    } catch (err) {
+      setError("An error occurred while adding product.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="name"
-        onChange={handleChange}
-        placeholder="Name"
-        required
-      />
-      <input
-        type="text"
-        name="price"
-        onChange={handleChange}
-        placeholder="Price"
-        required
-      />
+    <div className="shop-products-container">
+      <h1>Add New Product</h1>
+      {error && <p className="error">{error}</p>}
+      {success && <p className="success">{success}</p>}
 
-      <input type="file" accept="image/*" onChange={handleImageChange} />
-      {preview && (
-        <img
-          src={preview}
-          alt="Preview"
-          style={{ width: "100px", marginTop: "10px" }}
-        />
-      )}
-
-      <button type="submit">Add Product</button>
-    </form>
+      <form className="shop-profile-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>Product Name</label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Product Price</label>
+          <input
+            type="text"
+            name="price"
+            value={formData.price}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Product Image</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            required
+          />
+          {preview && (
+            <img
+              src={preview}
+              alt="Product Preview"
+              className="preview-image"
+            />
+          )}
+        </div>
+        <button className="btn" type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Adding..." : "Add Product"}
+        </button>
+      </form>
+    </div>
   );
 };
 

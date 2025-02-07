@@ -2,14 +2,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const navigate = useNavigate(); // Initialize useNavigate for redirection
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,7 +15,6 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    setSuccess("");
     setIsSubmitting(true);
 
     try {
@@ -32,9 +27,9 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setSuccess("Logged in successfully!");
-        localStorage.setItem("user", JSON.stringify(data.user)); // Save user info in localStorage
-        navigate("/home"); // Redirect to the home page
+        // ✅ Store user data in local storage
+        localStorage.setItem("user", JSON.stringify(data.user));
+        navigate("/home");
       } else {
         setError(data.error);
       }
@@ -50,27 +45,24 @@ const Login = () => {
       <h1>Sign In</h1>
       <form className="login-form" onSubmit={handleSubmit}>
         {error && <div className="error">{error}</div>}
-        {success && <div className="success">{success}</div>}
         <div className="form-group">
-          <label htmlFor="email">Email Address</label>
+          <label>Email Address</label>
           <input
             type="email"
-            id="email"
             name="email"
-            placeholder="Enter your email"
             value={formData.email}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password</label>
+          <label>Password</label>
           <input
             type="password"
-            id="password"
             name="password"
-            placeholder="Enter your password"
             value={formData.password}
             onChange={handleChange}
+            required
           />
         </div>
         <button className="btn" type="submit" disabled={isSubmitting}>
