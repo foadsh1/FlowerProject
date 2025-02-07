@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../assets/css/globalstyles.css";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // ✅ Eye Icons
+import "../assets/css/shopOwnerSignin.css"; // ✅ Import CSS
 
 const ShopOwnerSignin = () => {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -12,9 +12,16 @@ const ShopOwnerSignin = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // ✅ Toggle State
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleSubmit = async (e) => {
@@ -46,40 +53,55 @@ const ShopOwnerSignin = () => {
   };
 
   return (
-    <div className="login-container">
-      <h1>Shop Owner Sign-In</h1>
-      <form className="login-form" onSubmit={handleSubmit}>
-        {error && <div className="error">{error}</div>}
-        {success && <div className="success">{success}</div>}
-        <div className="form-group">
-          <label htmlFor="email">Email Address</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Enter your email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Enter your password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-        </div>
-        <button className="btn" type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Logging in..." : "Sign In"}
-        </button>
-        <div className="form-group">
-          Don't have an account? <a href="/shop-owner/signup">Sign Up</a>
-        </div>
-      </form>
+    <div className="shopowner-container">
+      <div className="shopowner-card">
+        <h1 className="shopowner-heading">Shop Owner Sign-In</h1>
+        <p className="shopowner-text">Manage your store with ease.</p>
+
+        <form className="shopowner-form" onSubmit={handleSubmit}>
+          {error && <div className="error">{error}</div>}
+          {success && <div className="success">{success}</div>}
+
+          <div className="form-group">
+            <label>Email Address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Password</label>
+            <div className="password-container">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              <span className="password-toggle" onClick={togglePasswordVisibility}>
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
+          </div>
+
+          <button className="shopowner-btn" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Logging in..." : "Sign In"}
+          </button>
+
+          <p className="auth-link">
+            Don't have an account? <a href="/shop-owner/signup">Sign Up</a>
+          </p>
+        </form>
+      </div>
     </div>
   );
 };

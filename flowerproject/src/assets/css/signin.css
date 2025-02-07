@@ -1,0 +1,125 @@
+/* ✅ General Sign-In Page Styling */
+.signin-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #fff0f5;
+  /* Light pink background */
+}
+
+.signin-card {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+/* ✅ Sign-In Heading */
+.signin-heading {
+  font-size: 2rem;
+  color: #d63384;
+  margin-bottom: 15px;
+}
+
+.signin-text {
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 25px;
+}
+
+/* ✅ Form Inputs */
+.signin-form .form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.signin-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.signin-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.signin-form input:focus {
+  border-color: #d63384;
+  outline: none;
+}
+
+/* ✅ Password Field with Eye Icon */
+.password-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-container input {
+  flex: 1;
+  padding-right: 40px;
+  /* Space for eye icon */
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  color: #888;
+  transition: 0.3s;
+}
+
+.password-toggle:hover {
+  color: #d63384;
+}
+
+/* ✅ Sign-In Button */
+.signin-btn {
+  width: 100%;
+  padding: 12px;
+  background: #d63384;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.signin-btn:hover {
+  background: #b12a6b;
+}
+
+/* ✅ Error & Success Messages */
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.success {
+  color: green;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+/* ✅ Sign-Up Link */
+.signup-link {
+  margin-top: 15px;
+  font-size: 1rem;
+}
+
+.signup-link a {
+  color: #d63384;
+  font-weight: bold;
+}

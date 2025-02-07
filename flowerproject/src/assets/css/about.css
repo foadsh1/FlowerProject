@@ -1,0 +1,150 @@
+/* ✅ General Page Styling */
+.about-page {
+  font-family: "Arial", sans-serif;
+  background: #fff0f5;
+  /* Light pink background */
+  color: #333;
+  text-align: center;
+  width: 100%;
+}
+
+/* ✅ Full-Width Hero Section */
+.about-hero {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+  /* Makes the hero section tall */
+  background: url("../images/about.jpg") no-repeat center center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-overlay {
+  background: rgba(255, 255, 255, 0.7);
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.about-overlay h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #d63384;
+}
+
+.about-overlay p {
+  font-size: 1.5rem;
+  margin-top: 10px;
+}
+
+/* ✅ Content Section */
+.about-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 80px 10%;
+  gap: 40px;
+  max-width: 1400px;
+  margin: auto;
+}
+
+/* ✅ Text Section */
+.about-text {
+  flex: 1;
+  font-size: 1.2rem;
+  text-align: left;
+  line-height: 1.8;
+}
+
+.about-text h2 {
+  font-size: 2rem;
+  color: #b12a6b;
+  margin-bottom: 20px;
+}
+
+.about-highlight {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #d63384;
+  text-align: left;
+  margin-top: 20px;
+}
+
+/* ✅ Image Section */
+.about-image-container {
+  flex: 1;
+}
+
+.about-image {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* ✅ Mission Section */
+.about-mission {
+  background: #fff;
+  padding: 60px 10%;
+  text-align: center;
+  font-size: 1.2rem;
+  line-height: 1.8;
+}
+
+.about-mission h2 {
+  font-size: 2rem;
+  color: #d63384;
+  margin-bottom: 15px;
+}
+
+/* ✅ Call to Action */
+.about-footer {
+  background: #d63384;
+  color: white;
+  padding: 50px 10%;
+  text-align: center;
+}
+
+.about-footer h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.about-footer p {
+  font-size: 1.3rem;
+}
+
+/* ✅ Mobile Responsiveness */
+@media (max-width: 1024px) {
+  .about-content {
+    flex-direction: column;
+    padding: 40px 5%;
+    text-align: center;
+  }
+
+  .about-text {
+    text-align: center;
+  }
+
+  .about-highlight {
+    text-align: center;
+  }
+
+  .about-image {
+    max-width: 350px;
+  }
+
+  .about-hero {
+    height: 60vh;
+  }
+
+  .about-overlay h1 {
+    font-size: 2.2rem;
+  }
+
+  .about-overlay p {
+    font-size: 1.2rem;
+  }
+}

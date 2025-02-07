@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../assets/css/navbar.css";
+import logo from "../assets/images/logo.jpg"; // ✅ Import Logo
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -19,9 +20,14 @@ const Navbar = () => {
 
   return (
     <header className="navbar">
+      {/* ✅ Logo */}
       <div className="logo">
-        <Link to="/home">My Flower Shop</Link>
+        <Link to="/home">
+          <img src={logo} alt="Flora Logo" className="logo-img" />
+        </Link>
       </div>
+
+      {/* ✅ Navigation Links */}
       <nav>
         <Link to="/home">Home</Link>
         <Link to="/flower-shops">Shops</Link>
@@ -32,10 +38,7 @@ const Navbar = () => {
         {clientUser ? (
           <>
             <Link to="/user/profile">Client Profile</Link>
-            <button
-              className="logout-btn"
-              onClick={() => handleLogout("client")}
-            >
+            <button className="logout-btn" onClick={() => handleLogout("client")}>
               Logout
             </button>
           </>
@@ -53,10 +56,7 @@ const Navbar = () => {
         {shopOwnerUser ? (
           <>
             <Link to="/shop-owner/profile">Shop Owner Profile</Link>
-            <button
-              className="logout-btn"
-              onClick={() => handleLogout("shopOwner")}
-            >
+            <button className="logout-btn" onClick={() => handleLogout("shopOwner")}>
               Logout
             </button>
           </>

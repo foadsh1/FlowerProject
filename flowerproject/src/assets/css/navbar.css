@@ -1,86 +1,144 @@
-/* Container */
-.client-profile-container {
-  max-width: 600px;
-  margin: auto;
-  padding: 20px;
-  text-align: center;
-}
-
-.client-profile-container h1 {
-  font-size: 2.2rem;
-  color: #007bff;
-  margin-bottom: 20px;
-  font-weight: bold;
-}
-
-/* Form Styling */
-.client-profile-form {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  text-align: left;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-.form-group label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 5px;
-  color: #444;
-}
-
-.form-group input,
-.form-group textarea {
+/* ✅ Navbar Container */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffebf0;
+  /* Light pink background */
+  padding: 15px 50px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
   width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  height: 70px;
+  /* ✅ Set a fixed height */
 }
 
-.form-group input:disabled {
-  background: #f0f0f0;
+/* ✅ Space for Content (Prevents Overlapping) */
+body {
+  padding-top: 80px;
+  /* ✅ Adds space below the navbar */
 }
 
-/* Button */
-.btn {
-  padding: 12px 16px;
-  border: none;
+/* ✅ Logo */
+.logo img {
+  height: 50px;
+  /* Adjust logo size */
+  width: auto;
   cursor: pointer;
-  font-size: 1rem;
-  font-weight: bold;
-  border-radius: 6px;
+}
+
+/* ✅ Navigation Links */
+nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: color 0.3s ease-in-out;
+}
+
+nav a:hover {
+  color: #d63384;
+}
+
+/* ✅ Dropdown Menu */
+.dropdown {
+  position: relative;
+}
+
+.dropbtn {
+  background: none;
+  border: none;
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background: white;
+  min-width: 150px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  overflow: hidden;
+  top: 30px;
+  left: 0;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #333;
   transition: background 0.3s ease-in-out;
-  width: 100%;
-  background: #28a745;
+}
+
+.dropdown-content a:hover {
+  background: #ffebf0;
+  color: #d63384;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* ✅ Logout Button */
+.logout-btn {
+  background: #d63384;
   color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
-.btn:hover {
-  background: #218838;
+.logout-btn:hover {
+  background: #b12a6b;
 }
 
-/* Responsive Design */
-@media screen and (max-width: 768px) {
-  .client-profile-container {
-    padding: 15px;
+/* ✅ Mobile Responsiveness */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 15px 20px;
+    height: 60px;
+    /* ✅ Reduce navbar height for mobile */
   }
 
-  .client-profile-form {
-    padding: 15px;
+  body {
+    padding-top: 70px;
+    /* ✅ Adjust spacing for smaller screens */
   }
 
-  .form-group input {
-    font-size: 0.95rem;
-    padding: 8px;
+  nav {
+    gap: 10px;
   }
 
-  .btn {
+  nav a {
+    font-size: 1rem;
+  }
+
+  .dropbtn {
+    font-size: 1rem;
+  }
+
+  .dropdown-content {
+    min-width: 130px;
+  }
+
+  .logout-btn {
     font-size: 0.9rem;
-    padding: 10px;
+    padding: 7px 12px;
   }
 }

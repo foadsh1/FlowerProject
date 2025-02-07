@@ -1,15 +1,26 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // ✅ Eye Icons
+import "../assets/css/signin.css"; // ✅ Import CSS
 
-const Login = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+const Signin = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // ✅ Toggle State
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleSubmit = async (e) => {
@@ -27,7 +38,6 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // ✅ Store user data in local storage
         localStorage.setItem("user", JSON.stringify(data.user));
         navigate("/home");
       } else {
@@ -41,36 +51,52 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <h1>Sign In</h1>
-      <form className="login-form" onSubmit={handleSubmit}>
-        {error && <div className="error">{error}</div>}
-        <div className="form-group">
-          <label>Email Address</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button className="btn" type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Logging in..." : "Sign In"}
-        </button>
-      </form>
+    <div className="signin-container">
+      <div className="signin-card">
+        <h1 className="signin-heading">Sign In</h1>
+        <p className="signin-text">Welcome back to Flora!</p>
+
+        <form className="signin-form" onSubmit={handleSubmit}>
+          {error && <div className="error">{error}</div>}
+
+          <div className="form-group">
+            <label>Email Address</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Password</label>
+            <div className="password-container">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              <span className="password-toggle" onClick={togglePasswordVisibility}>
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
+          </div>
+
+          <button className="signin-btn" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Signing in..." : "Sign In"}
+          </button>
+        </form>
+
+        <p className="signup-link">
+          Don't have an account? <a href="/signup">Sign Up</a>
+        </p>
+      </div>
     </div>
   );
 };
 
-export default Login;
+export default Signin;

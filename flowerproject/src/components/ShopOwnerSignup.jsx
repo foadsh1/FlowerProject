@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // ✅ Eye Icons
+import "../assets/css/shopOwnerSignup.css"; // ✅ Import CSS
 
 const ShopOwnerSignup = () => {
   const navigate = useNavigate();
@@ -10,64 +11,27 @@ const ShopOwnerSignup = () => {
     password: "",
     shopName: "",
     location: "",
-    image: null,
     moreInfo: "",
   });
 
-  const [preview, setPreview] = useState(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // ✅ Toggle State
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
-  const handleImageChange = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    setPreview(URL.createObjectURL(file));
-
-    const imageForm = new FormData();
-    imageForm.append("image", file);
-
-    const response = await fetch("http://localhost:5000/upload", {
-      method: "POST",
-      body: imageForm,
-    });
-
-    const data = await response.json();
-    if (data.imageUrl) {
-      setFormData((prev) => ({ ...prev, image: data.imageUrl }));
-    }
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
-
-    if (
-      !formData.name ||
-      !formData.email ||
-      !formData.password ||
-      !formData.shopName ||
-      !formData.location ||
-      !formData.moreInfo
-    ) {
-      setError("All fields are required.");
-      return;
-    }
-    if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      setError("Invalid email format.");
-      return;
-    }
-    if (formData.password.length < 8) {
-      setError("Password must be at least 8 characters.");
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
@@ -81,7 +45,7 @@ const ShopOwnerSignup = () => {
 
       if (response.ok) {
         setSuccess("Shop Owner registered successfully!");
-        navigate("/shop-owner/signin");
+        setTimeout(() => navigate("/shop-owner/signin"), 2000);
       } else {
         setError(data.error || "Registration failed.");
       }
@@ -93,94 +57,100 @@ const ShopOwnerSignup = () => {
   };
 
   return (
-    <div className="login-container">
-      <h1>Shop Owner Sign-Up</h1>
-      <form className="login-form" onSubmit={handleSubmit}>
-        {error && <div className="error">{error}</div>}
-        {success && <div className="success">{success}</div>}
-        <div className="form-group">
-          <label htmlFor="name">Full Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Enter your full name"
-            value={formData.name}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="email">Email Address</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Enter your email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Enter your password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="shopName">Shop Name</label>
-          <input
-            type="text"
-            id="shopName"
-            name="shopName"
-            placeholder="Enter your shop name"
-            value={formData.shopName}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="location">Location</label>
-          <input
-            type="text"
-            id="location"
-            name="location"
-            placeholder="Enter shop location"
-            value={formData.location}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="moreInfo">More About Shop</label>
-          <textarea
-            id="moreInfo"
-            name="moreInfo"
-            placeholder="Describe your shop"
-            value={formData.moreInfo}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>Shop Image</label>
-          <input type="file" accept="image/*" onChange={handleImageChange} />
-          {preview && (
-            <img
-              src={preview}
-              alt="Shop Preview"
-              className="auth-preview-image"
+    <div className="shopowner-container">
+      <div className="shopowner-card">
+        <h1 className="shopowner-heading">Create Your Shop Owner Account</h1>
+        <p className="shopowner-text">Join Flora and start selling.</p>
+
+        <form className="shopowner-form" onSubmit={handleSubmit}>
+          {error && <div className="error">{error}</div>}
+          {success && <div className="success">{success}</div>}
+
+          <div className="form-group">
+            <label>Full Name</label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Enter your full name"
+              value={formData.name}
+              onChange={handleChange}
+              required
             />
-          )}
-        </div>
-        <button className="btn" type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Registering..." : "Sign Up"}
-        </button>
-        <div className="form-group">
+          </div>
+
+          <div className="form-group">
+            <label>Email Address</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Password</label>
+            <div className="password-container">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Enter your password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              <span className="password-toggle" onClick={togglePasswordVisibility}>
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label>Shop Name</label>
+            <input
+              type="text"
+              name="shopName"
+              placeholder="Enter your shop name"
+              value={formData.shopName}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Location</label>
+            <input
+              type="text"
+              name="location"
+              placeholder="Enter your shop location"
+              value={formData.location}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>More About Your Shop</label>
+            <textarea
+              name="moreInfo"
+              placeholder="Describe your shop"
+              value={formData.moreInfo}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <button className="shopowner-btn" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Registering..." : "Sign Up"}
+          </button>
+        </form>
+
+        <p className="auth-link">
           Already have an account? <a href="/shop-owner/signin">Sign In</a>
-        </div>
-      </form>
+        </p>
+      </div>
     </div>
   );
 };

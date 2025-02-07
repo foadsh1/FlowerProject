@@ -1,0 +1,90 @@
+/* ✅ Contact Form Container */
+.contact-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* ✅ Contact Heading */
+.contact-heading {
+  font-size: 2rem;
+  color: #d63384;
+  margin-bottom: 15px;
+}
+
+/* ✅ Success & Error Messages */
+.success {
+  color: green;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.error {
+  color: red;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+/* ✅ Form Inputs */
+.contact-form .form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.contact-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #d63384;
+  outline: none;
+}
+
+/* ✅ Message Box */
+.contact-form textarea {
+  height: 120px;
+  resize: none;
+}
+
+/* ✅ Submit Button */
+.contact-btn {
+  width: 100%;
+  padding: 12px;
+  background: #d63384;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.contact-btn:hover {
+  background: #b12a6b;
+}
+
+/* ✅ Responsive Design */
+@media (max-width: 768px) {
+  .contact-container {
+    width: 90%;
+    padding: 20px;
+  }
+}

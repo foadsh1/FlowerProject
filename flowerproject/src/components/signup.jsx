@@ -59,9 +59,9 @@ const Signup = () => {
   };
 
   return (
-    <div className="login-container">
+    <div className="signup-container">
       <h1>Client Sign Up</h1>
-      <form className="login-form" onSubmit={handleSubmit}>
+      <form className="signup-form" onSubmit={handleSubmit}>
         {error && <div className="error">{error}</div>}
         {success && <div className="success">{success}</div>}
 
@@ -99,6 +99,44 @@ const Signup = () => {
             name="password"
             placeholder="Enter your password"
             value={formData.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="city">City</label>
+          <input
+            type="text"
+            id="city"
+            name="city"
+            placeholder="Enter your city"
+            value={formData.city}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="phone">Phone Number</label>
+          <input
+            type="text"
+            id="phone"
+            name="phone"
+            placeholder="Enter your phone number"
+            value={formData.phone}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="address">Address</label>
+          <textarea
+            id="address"
+            name="address"
+            placeholder="Enter your full address"
+            value={formData.address}
             onChange={handleChange}
             required
           />

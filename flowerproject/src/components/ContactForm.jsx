@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../assets/css/contact.css"; // ✅ Import CSS
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -39,46 +40,51 @@ const ContactForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Contact Us</h2>
+    <div className="contact-container">
+      <h2 className="contact-heading">Contact Us</h2>
 
-      {success && <p style={{ color: "green" }}>{success}</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {success && <p className="success">{success}</p>}
+      {error && <p className="error">{error}</p>}
 
-      <div>
-        <label htmlFor="name">Name:</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="message">Message:</label>
-        <textarea
-          id="message"
-          name="message"
-          value={formData.message}
-          onChange={handleChange}
-          required
-        ></textarea>
-      </div>
-      <button type="submit">Submit</button>
-    </form>
+      <form className="contact-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="name">Name:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="message">Message:</label>
+          <textarea
+            id="message"
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
+            required
+          ></textarea>
+        </div>
+
+        <button className="contact-btn" type="submit">Submit</button>
+      </form>
+    </div>
   );
 };
 
