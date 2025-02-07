@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // ✅ Eye Icons
+import "../assets/css/signup.css"; // ✅ Import CSS
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -15,17 +17,21 @@ const Signup = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // ✅ Toggle State
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
-
     setIsSubmitting(true);
 
     try {
@@ -60,92 +66,99 @@ const Signup = () => {
 
   return (
     <div className="signup-container">
-      <h1>Client Sign Up</h1>
-      <form className="signup-form" onSubmit={handleSubmit}>
-        {error && <div className="error">{error}</div>}
-        {success && <div className="success">{success}</div>}
+      <div className="signup-card">
+        <h1 className="signup-heading">Create Your Account</h1>
+        <p className="signup-text">Join Flora and explore the beauty of flowers.</p>
 
-        <div className="form-group">
-          <label htmlFor="name">Full Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Enter your full name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        <form className="signup-form" onSubmit={handleSubmit}>
+          {error && <div className="error">{error}</div>}
+          {success && <div className="success">{success}</div>}
 
-        <div className="form-group">
-          <label htmlFor="email">Email Address</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Enter your email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label>Full Name</label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Enter your full name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Enter your password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label>Email Address</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="city">City</label>
-          <input
-            type="text"
-            id="city"
-            name="city"
-            placeholder="Enter your city"
-            value={formData.city}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label>Password</label>
+            <div className="password-container">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Enter your password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              <span className="password-toggle" onClick={togglePasswordVisibility}>
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="phone">Phone Number</label>
-          <input
-            type="text"
-            id="phone"
-            name="phone"
-            placeholder="Enter your phone number"
-            value={formData.phone}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label>City</label>
+            <input
+              type="text"
+              name="city"
+              placeholder="Enter your city"
+              value={formData.city}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="address">Address</label>
-          <textarea
-            id="address"
-            name="address"
-            placeholder="Enter your full address"
-            value={formData.address}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label>Phone Number</label>
+            <input
+              type="text"
+              name="phone"
+              placeholder="Enter your phone number"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <button className="btn" type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Registering..." : "Sign Up"}
-        </button>
-      </form>
+          <div className="form-group">
+            <label>Address</label>
+            <textarea
+              name="address"
+              placeholder="Enter your full address"
+              value={formData.address}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <button className="signup-btn" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Registering..." : "Sign Up"}
+          </button>
+        </form>
+
+        <p className="signin-link">
+          Already have an account? <a href="/login">Sign In</a>
+        </p>
+      </div>
     </div>
   );
 };

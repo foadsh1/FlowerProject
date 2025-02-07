@@ -1,0 +1,87 @@
+/* ✅ Flower Shops Container */
+.shops-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 50px 20px;
+  text-align: center;
+}
+
+/* ✅ Page Title */
+.shops-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #d63384;
+  margin-bottom: 20px;
+}
+
+/* ✅ Error Message */
+.error {
+  color: red;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+/* ✅ Grid Layout for Shops */
+.shops-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* ✅ Individual Shop Card */
+.shop-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.shop-card:hover {
+  transform: scale(1.05);
+}
+
+/* ✅ Shop Image */
+.shop-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* ✅ Shop Name */
+.shop-name {
+  font-size: 1.5rem;
+  color: #b12a6b;
+  margin: 10px 0;
+}
+
+/* ✅ Shop Location */
+.shop-location {
+  font-size: 1rem;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+/* ✅ Shop Info */
+.shop-info {
+  font-size: 1rem;
+  color: #444;
+  text-align: center;
+}
+
+/* ✅ No Shops Available Message */
+.no-shops {
+  font-size: 1.3rem;
+  color: #444;
+}
+
+/* ✅ Mobile Responsive */
+@media (max-width: 768px) {
+  .shops-grid {
+    grid-template-columns: 1fr;
+  }
+}

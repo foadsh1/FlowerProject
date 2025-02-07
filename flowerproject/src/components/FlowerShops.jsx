@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../assets/css/globalstyles.css";
+import "../assets/css/flowerShops.css"; // ✅ Import CSS for styling
 
 const FlowerShops = () => {
   const [shops, setShops] = useState([]);
