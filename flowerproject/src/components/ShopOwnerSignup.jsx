@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // ✅ Eye Icons
 import "../assets/css/shopOwnerSignup.css"; // ✅ Import CSS
+import { Link } from "react-router-dom";
 
 const ShopOwnerSignup = () => {
   const navigate = useNavigate();
@@ -148,11 +149,12 @@ const ShopOwnerSignup = () => {
         </form>
 
         <p className="auth-link">
-          Already have an account? <a href="/shop-owner/signin">Sign In</a>
+          Already have an account? <Link to="/shop-owner/signin">Sign In</Link>
         </p>
       </div>
     </div>
   );
 };
+
 
 export default ShopOwnerSignup;

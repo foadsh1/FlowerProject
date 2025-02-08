@@ -8,6 +8,7 @@ const authRoutes = require("./routes/auth");
 const shopOwnerRoutes = require("./routes/shopOwner");
 const productRoutes = require("./routes/products");
 const contactRoutes = require("./routes/contact");
+const clientRoutes = require("./routes/client"); // ✅ Ensure Client Routes are included
 
 const app = express();
 const PORT = 5000;
@@ -42,6 +43,7 @@ app.use("/auth", authRoutes);
 app.use("/shop-owner", shopOwnerRoutes);
 app.use("/products", productRoutes);
 app.use("/contact", contactRoutes);
+app.use("/client", clientRoutes); // ✅ Fix: Add Client Routes for user updates
 
 // Image Upload Route
 app.post("/upload", upload.single("image"), (req, res) => {

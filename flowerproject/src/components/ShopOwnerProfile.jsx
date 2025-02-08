@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import "../assets/css/shopOwnerProducts.css"; // Reuse styles
+import "../assets/css/shopOwnerProducts.css"; // ✅ Import CSS
 
 const ShopOwnerProfile = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
-  const storedUser = JSON.parse(localStorage.getItem("user"));
-  const shopOwnerId = storedUser ? storedUser.id : null;
+  const { id } = useParams(); // ✅ Get the ID from the URL
+  const storedUser = JSON.parse(localStorage.getItem("shopOwner")); // ✅ Fix: Ensure we get the shopOwner
+  const shopOwnerId = storedUser ? storedUser.id : null; // ✅ Use correct storage key
 
   const [shopData, setShopData] = useState({
     shopName: "",
@@ -23,7 +23,7 @@ const ShopOwnerProfile = () => {
 
   useEffect(() => {
     if (!shopOwnerId) {
-      navigate("/shop-owner/signin");
+      navigate("/shop-owner/signin"); // ✅ Redirect to login if not authenticated
       return;
     }
 
@@ -126,6 +126,7 @@ const ShopOwnerProfile = () => {
         )}
       </div>
 
+      {/* ✅ Update Shop Details Form */}
       <form className="shop-profile-form" onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Shop Name</label>
@@ -171,7 +172,7 @@ const ShopOwnerProfile = () => {
         Manage My Products
       </button>
 
-      {/* Show Products */}
+      {/* ✅ Display Shop Products */}
       <h2>My Products</h2>
       <div className="products-grid">
         {products.length > 0 ? (

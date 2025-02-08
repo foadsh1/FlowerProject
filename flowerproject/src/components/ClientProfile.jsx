@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import "../assets/css/clientProfile.css"; // Import styling
+import { useNavigate, useParams } from "react-router-dom";
+import "../assets/css/clientProfile.css"; // ✅ Import styling
 
 const ClientProfile = () => {
   const navigate = useNavigate();
-  const storedUser = JSON.parse(localStorage.getItem("user")); // Get user from localStorage
+  const { id } = useParams(); // ✅ Get ID from URL
+  const storedUser = JSON.parse(localStorage.getItem("user"));
 
   const [userData, setUserData] = useState({
     name: "",
@@ -19,18 +20,40 @@ const ClientProfile = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    // Redirect to login if user is not found
-    if (!storedUser) {
+    if (!storedUser || storedUser.id !== parseInt(id)) {
       navigate("/login");
       return;
     }
 
-    // Set user data from localStorage
-    setUserData(storedUser);
-  }, [navigate, storedUser]);
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/client/${id}`);
+        const data = await response.json();
+
+        if (response.ok) {
+          setUserData({
+            name: data.name || "",
+            email: data.email || "",
+            city: data.city || "",
+            phone: data.phone || "",
+            address: data.address || "",
+          });
+        } else {
+          setError(data.error || "Failed to fetch user data.");
+        }
+      } catch (err) {
+        setError("An error occurred while fetching user data.");
+      }
+    };
+
+    fetchUserData();
+  }, [id, navigate]);
 
   const handleChange = (e) => {
-    setUserData({ ...userData, [e.target.name]: e.target.value });
+    setUserData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -40,19 +63,16 @@ const ClientProfile = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(
-        `http://localhost:5000/users/update/${storedUser.id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(userData),
-        }
-      );
+      const response = await fetch(`http://localhost:5000/client/update/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userData),
+      });
 
       const data = await response.json();
       if (response.ok) {
         setSuccess("Profile updated successfully!");
-        localStorage.setItem("user", JSON.stringify(userData)); // ✅ Update localStorage
+        localStorage.setItem("user", JSON.stringify({ ...storedUser, ...userData })); // ✅ Update local storage
       } else {
         setError(data.error || "Failed to update profile.");
       }

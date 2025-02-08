@@ -1,33 +1,24 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // ✅ Eye Icons
 import "../assets/css/shopOwnerSignin.css"; // ✅ Import CSS
-
+import { Link } from "react-router-dom";
 const ShopOwnerSignin = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showPassword, setShowPassword] = useState(false); // ✅ Toggle State
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    setSuccess("");
     setIsSubmitting(true);
 
     try {
@@ -38,10 +29,15 @@ const ShopOwnerSignin = () => {
       });
 
       const data = await response.json();
+
       if (response.ok) {
-        setSuccess("Login successful!");
-        localStorage.setItem("user", JSON.stringify(data.user)); // Store user info
-        navigate(`/shop-owner/profile/${data.user.id}`); // Redirect to profile page
+        console.log("Shop Owner Data:", data.user);
+
+        // ✅ Clear any existing client session before saving the shop owner session
+        localStorage.removeItem("user");
+        localStorage.setItem("shopOwner", JSON.stringify(data.user));
+
+        navigate(`/shop-owner/profile/${data.user.id}`);
       } else {
         setError(data.error || "Invalid credentials.");
       }
@@ -60,13 +56,11 @@ const ShopOwnerSignin = () => {
 
         <form className="shopowner-form" onSubmit={handleSubmit}>
           {error && <div className="error">{error}</div>}
-          {success && <div className="success">{success}</div>}
 
           <div className="form-group">
             <label>Email Address</label>
             <input
               type="email"
-              id="email"
               name="email"
               placeholder="Enter your email"
               value={formData.email}
@@ -77,30 +71,24 @@ const ShopOwnerSignin = () => {
 
           <div className="form-group">
             <label>Password</label>
-            <div className="password-container">
-              <input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                name="password"
-                placeholder="Enter your password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-              <span className="password-toggle" onClick={togglePasswordVisibility}>
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </span>
-            </div>
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
           </div>
 
           <button className="shopowner-btn" type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Logging in..." : "Sign In"}
           </button>
-
-          <p className="auth-link">
-            Don't have an account? <a href="/shop-owner/signup">Sign Up</a>
-          </p>
         </form>
+
+        <p className="auth-link">
+                    Don't have an account? <Link to="/shop-owner/signup">Sign Up</Link>
+                    </p>
       </div>
     </div>
   );

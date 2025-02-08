@@ -53,7 +53,7 @@ const Signin = () => {
   return (
     <div className="signin-container">
       <div className="signin-card">
-        <h1 className="signin-heading">Sign In</h1>
+        <h1 className="signin-heading">Client Sign In</h1>
         <p className="signin-text">Welcome back to Flora!</p>
 
         <form className="signin-form" onSubmit={handleSubmit}>
