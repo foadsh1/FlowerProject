@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import "../assets/css/shopDetails.css"; // ✅ Import CSS
 
 const ShopDetails = () => {
-  const { id } = useParams();
+  const { id } = useParams(); // ✅ Get Shop ID from URL
   const [shop, setShop] = useState(null);
   const [error, setError] = useState("");
 
@@ -12,6 +12,8 @@ const ShopDetails = () => {
       try {
         const response = await fetch(`http://localhost:5000/shop-owner/${id}`);
         const data = await response.json();
+
+        console.log("Fetched Shop Data:", data); // ✅ Debugging log
 
         if (response.ok) {
           setShop(data);
@@ -31,10 +33,14 @@ const ShopDetails = () => {
 
   return (
     <div className="shop-details-container">
-      <img src={`http://localhost:5000${shop.image}`} alt={shop.shop_name} className="shop-details-image" />
-      <h1 className="shop-details-title">{shop.shop_name}</h1>
+      <img
+        src={`http://localhost:5000${shop.image}`}
+        alt={shop.shop_name}
+        className="shop-details-image"
+      />
+      <h1 className="shop-details-title">{shop.shopName}</h1>
       <p className="shop-details-location">📍 Location: {shop.location}</p>
-      <p className="shop-details-info">{shop.more_info}</p>
+      <p className="shop-details-info">{shop.moreInfo}</p>
 
       {/* ✅ Show Products */}
       <h2 className="shop-products-title">Available Products</h2>
@@ -42,9 +48,13 @@ const ShopDetails = () => {
         {shop.products.length > 0 ? (
           shop.products.map((product) => (
             <div key={product.id} className="product-card">
-              <img src={`http://localhost:5000${product.image}`} alt={product.name} className="product-image" />
+              <img
+                src={`http://localhost:5000${product.image}`}
+                alt={product.name}
+                className="product-image"
+              />
               <h3 className="product-name">{product.name}</h3>
-              <p className="product-price">{product.price}</p>
+              <p className="product-price">${product.price}</p>
             </div>
           ))
         ) : (

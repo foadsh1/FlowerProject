@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const router = express.Router();
 
-// Get All Products
+// ✅ Get All Products
 router.get("/", (req, res) => {
   db.query("SELECT * FROM products", (err, results) => {
     if (err) return res.status(500).json({ error: "Database error." });
@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
   });
 });
 
-// Get Products by Shop Owner ID
+// ✅ Get Products by Shop Owner ID
 router.get("/shop/:shop_owner_id", (req, res) => {
   const { shop_owner_id } = req.params;
 
@@ -26,7 +26,7 @@ router.get("/shop/:shop_owner_id", (req, res) => {
   );
 });
 
-// Get a Single Product
+// ✅ Get a Single Product by ID
 router.get("/:id", (req, res) => {
   const { id } = req.params;
 
@@ -39,7 +39,7 @@ router.get("/:id", (req, res) => {
   });
 });
 
-// Add a New Product Linked to a Shop
+// ✅ Add a New Product
 router.post("/add", (req, res) => {
   const { name, price, image, shop_owner_id } = req.body;
 
@@ -57,7 +57,7 @@ router.post("/add", (req, res) => {
   );
 });
 
-// Update a Product (Keep Old Image If No New Image is Uploaded)
+// ✅ Update a Product (Keeps Old Image If No New Image is Uploaded)
 router.put("/edit/:id", (req, res) => {
   const { id } = req.params;
   const { name, price, image } = req.body;
@@ -78,6 +78,7 @@ router.put("/edit/:id", (req, res) => {
     const oldImage = results[0].image;
     const updateQuery =
       "UPDATE products SET name = ?, price = ?, image = ? WHERE id = ?";
+
     db.query(
       updateQuery,
       [name, price, image || oldImage, id],
@@ -103,7 +104,7 @@ router.put("/edit/:id", (req, res) => {
   });
 });
 
-// Delete a Product and Remove its Image
+// ✅ Delete a Product and Remove its Image
 router.delete("/delete/:id", (req, res) => {
   const { id } = req.params;
 

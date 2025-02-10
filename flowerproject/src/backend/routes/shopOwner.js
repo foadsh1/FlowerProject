@@ -7,9 +7,18 @@ const router = express.Router();
 
 // ✅ Shop Owner Signup
 router.post("/signup", async (req, res) => {
-  const { name, email, password, shopName, location, image, moreInfo } = req.body;
+  const { name, email, password, shopName, location, image, moreInfo } =
+    req.body;
 
-  if (!name || !email || !password || !shopName || !location || !image || !moreInfo) {
+  if (
+    !name ||
+    !email ||
+    !password ||
+    !shopName ||
+    !location ||
+    !image ||
+    !moreInfo
+  ) {
     return res.status(400).json({ error: "All fields are required." });
   }
 
@@ -20,15 +29,19 @@ router.post("/signup", async (req, res) => {
       INSERT INTO shop_owners (name, email, password, shop_name, location, image, more_info) 
       VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
-    db.query(sql, [name, email, hashedPassword, shopName, location, image, moreInfo], (err, result) => {
-      if (err) {
-        if (err.code === "ER_DUP_ENTRY") {
-          return res.status(400).json({ error: "Email already exists." });
+    db.query(
+      sql,
+      [name, email, hashedPassword, shopName, location, image, moreInfo],
+      (err, result) => {
+        if (err) {
+          if (err.code === "ER_DUP_ENTRY") {
+            return res.status(400).json({ error: "Email already exists." });
+          }
+          return res.status(500).json({ error: "Database error." });
         }
-        return res.status(500).json({ error: "Database error." });
+        res.json({ message: "Shop Owner registered successfully!" });
       }
-      res.json({ message: "Shop Owner registered successfully!" });
-    });
+    );
   } catch (error) {
     res.status(500).json({ error: "Server error." });
   }
@@ -39,7 +52,9 @@ router.post("/signin", (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(400).json({ error: "Both email and password are required." });
+    return res
+      .status(400)
+      .json({ error: "Both email and password are required." });
   }
 
   const sql = "SELECT * FROM shop_owners WHERE email = ?";
@@ -74,7 +89,8 @@ router.post("/signin", (req, res) => {
 
 // ✅ Fetch all flower shops
 router.get("/all", (req, res) => {
-  const sql = "SELECT id, shop_name, location, image, more_info FROM shop_owners";
+  const sql =
+    "SELECT id, shop_name, location, image, more_info FROM shop_owners";
   db.query(sql, (err, results) => {
     if (err) return res.status(500).json({ error: "Database error." });
     res.json(results);
@@ -86,7 +102,7 @@ router.get("/:id", (req, res) => {
   const { id } = req.params;
 
   const shopQuery = `
-    SELECT id, shop_name, location, image, more_info 
+    SELECT id, name AS ownerName, email, shop_name AS shopName, location, image, more_info AS moreInfo
     FROM shop_owners 
     WHERE id = ?`;
 
@@ -97,7 +113,9 @@ router.get("/:id", (req, res) => {
 
   db.query(shopQuery, [id], (err, shopResults) => {
     if (err) {
-      return res.status(500).json({ error: "Database error fetching shop details." });
+      return res
+        .status(500)
+        .json({ error: "Database error fetching shop details." });
     }
     if (shopResults.length === 0) {
       return res.status(404).json({ error: "Shop not found." });
@@ -107,7 +125,9 @@ router.get("/:id", (req, res) => {
 
     db.query(productsQuery, [id], (err, productResults) => {
       if (err) {
-        return res.status(500).json({ error: "Database error fetching products." });
+        return res
+          .status(500)
+          .json({ error: "Database error fetching products." });
       }
 
       res.json({ ...shopData, products: productResults });
@@ -115,20 +135,42 @@ router.get("/:id", (req, res) => {
   });
 });
 
-// ✅ Update shop owner details
+// ✅ Update shop owner details (Retains Old Image If No New Image is Uploaded)
 router.put("/update/:id", (req, res) => {
   const { id } = req.params;
   const { shopName, location, image, moreInfo } = req.body;
 
-  const sql = `
-    UPDATE shop_owners 
-    SET shop_name = ?, location = ?, image = ?, more_info = ? 
-    WHERE id = ?`;
+  // Fetch current image before updating
+  db.query(
+    "SELECT image FROM shop_owners WHERE id = ?",
+    [id],
+    (err, results) => {
+      if (err)
+        return res
+          .status(500)
+          .json({ error: "Database error retrieving current image." });
 
-  db.query(sql, [shopName, location, image, moreInfo, id], (err, result) => {
-    if (err) return res.status(500).json({ error: "Database error." });
-    res.json({ message: "Shop information updated successfully." });
-  });
+      const oldImage = results[0]?.image || ""; // Get the existing image if available
+
+      const sql = `
+      UPDATE shop_owners 
+      SET shop_name = ?, location = ?, image = ?, more_info = ? 
+      WHERE id = ?`;
+
+      db.query(
+        sql,
+        [shopName, location, image || oldImage, moreInfo, id],
+        (err, result) => {
+          if (err)
+            return res
+              .status(500)
+              .json({ error: "Database error updating shop details." });
+
+          res.json({ message: "Shop information updated successfully." });
+        }
+      );
+    }
+  );
 });
 
 // ✅ Delete shop owner and their products
@@ -137,11 +179,17 @@ router.delete("/delete/:id", (req, res) => {
 
   // First, delete products associated with the shop owner
   db.query("DELETE FROM products WHERE shop_owner_id = ?", [id], (err) => {
-    if (err) return res.status(500).json({ error: "Database error deleting products." });
+    if (err)
+      return res
+        .status(500)
+        .json({ error: "Database error deleting products." });
 
     // Then delete the shop owner
     db.query("DELETE FROM shop_owners WHERE id = ?", [id], (err) => {
-      if (err) return res.status(500).json({ error: "Database error deleting shop owner." });
+      if (err)
+        return res
+          .status(500)
+          .json({ error: "Database error deleting shop owner." });
 
       res.json({ message: "Shop owner and products deleted successfully." });
     });

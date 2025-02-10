@@ -26,11 +26,11 @@ const RoutesFile = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/shop-owner/profile/:id" element={<ShopOwnerProfile />} />
-      <Route path="/user/profile/:id" element={<ClientProfile />} />;
+      <Route path="/user/profile/:id" element={<ClientProfile />} />
       <Route path="/flower-shops/:id" element={<ShopDetails />} />
       <Route path="/shop-owner/products" element={<ShopOwnerProducts />} />
       <Route path="/shop-owner/add-product" element={<AddProduct />} />
-      <Route path="/shop-owner/edit-product/:id" element={<EditProduct />} />;
+      <Route path="/shop-owner/edit-product/:id" element={<EditProduct />} />
       <Route path="/shop-owner/signin" element={<ShopOwnerSignin />} />
       <Route path="/shop-owner/signup" element={<ShopOwnerSignup />} />
       <Route path="/flower-shops" element={<FlowerShops />} />

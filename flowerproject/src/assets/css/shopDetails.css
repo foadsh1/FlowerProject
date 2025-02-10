@@ -1,117 +1,85 @@
-/* ✅ Shop Details Page */
+/* 🌸 Shop Details Container */
 .shop-details-container {
-  max-width: 1000px;
+  max-width: 800px;
   margin: 50px auto;
-  padding: 30px;
-  background: white;
+  padding: 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  color: white;
+  font-family: "Poppins", sans-serif;
 }
 
-/* ✅ Shop Image */
+/* 🌸 Shop Image */
 .shop-details-image {
   width: 100%;
-  max-height: 400px;
+  max-height: 300px;
   object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 20px;
+  border-radius: 10px;
 }
 
-/* ✅ Shop Name */
+/* 🌸 Shop Info */
 .shop-details-title {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #d63384;
-  margin-bottom: 10px;
+  font-size: 28px;
+  font-weight: 700;
+  margin-top: 10px;
 }
 
-/* ✅ Shop Location */
 .shop-details-location {
-  font-size: 1.2rem;
-  color: #555;
-  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: 500;
 }
 
-/* ✅ Shop Info */
 .shop-details-info {
-  font-size: 1.1rem;
-  color: #444;
-  line-height: 1.6;
-  margin-bottom: 25px;
+  font-size: 16px;
+  margin-top: 10px;
 }
 
-/* ✅ Products Section */
-.shop-products-title {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #b12a6b;
-  margin: 20px 0;
-}
-
-/* ✅ Product Grid */
+/* 🌸 Products Grid */
 .shop-products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
 }
 
-/* ✅ Individual Product Card */
 .product-card {
-  background: white;
-  padding: 15px;
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
   text-align: center;
   transition: transform 0.3s ease-in-out;
 }
 
 .product-card:hover {
-  transform: scale(1.05);
+  transform: translateY(-5px);
 }
 
-/* ✅ Product Image */
 .product-image {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
   border-radius: 10px;
-  margin-bottom: 10px;
 }
 
-/* ✅ Product Name */
 .product-name {
-  font-size: 1.3rem;
-  color: #d63384;
-  font-weight: bold;
-  margin-bottom: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ff3d68;
+  margin-top: 5px;
 }
 
-/* ✅ Product Price */
 .product-price {
-  font-size: 1.1rem;
-  color: #444;
+  font-size: 14px;
+  color: #666;
 }
 
-/* ✅ No Products Message */
-.no-products {
-  font-size: 1.2rem;
-  color: #777;
-}
-
-/* ✅ Mobile Responsive */
+/* 🌸 Mobile Responsive */
 @media (max-width: 768px) {
   .shop-details-container {
-    width: 90%;
-    padding: 20px;
+    padding: 15px;
   }
 
   .shop-products-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .shop-details-title {
-    font-size: 1.8rem;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   }
 }

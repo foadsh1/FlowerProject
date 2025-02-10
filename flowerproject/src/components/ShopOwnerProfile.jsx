@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import "../assets/css/shopOwnerProducts.css"; // ✅ Import CSS
+import "../assets/css/shopOwnerProfile.css"; // ✅ Import the modern pink-themed CSS
 
 const ShopOwnerProfile = () => {
   const navigate = useNavigate();
   const { id } = useParams(); // ✅ Get the ID from the URL
-  const storedUser = JSON.parse(localStorage.getItem("shopOwner")); // ✅ Fix: Ensure we get the shopOwner
-  const shopOwnerId = storedUser ? storedUser.id : null; // ✅ Use correct storage key
+  const storedUser = JSON.parse(localStorage.getItem("shopOwner")) || {};
+  const shopOwnerId = storedUser.id || null;
+
+  console.log("Stored User:", storedUser);
+  console.log("Shop Owner ID:", shopOwnerId);
 
   const [shopData, setShopData] = useState({
+    ownerName: "",
+    email: "",
     shopName: "",
     location: "",
     image: "",
@@ -23,6 +28,7 @@ const ShopOwnerProfile = () => {
 
   useEffect(() => {
     if (!shopOwnerId) {
+      console.log("No shop owner ID found, redirecting to sign in.");
       navigate("/shop-owner/signin"); // ✅ Redirect to login if not authenticated
       return;
     }
@@ -106,6 +112,31 @@ const ShopOwnerProfile = () => {
     }
   };
 
+  const handleDeleteProfile = async () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete your profile? This action cannot be undone."
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch(
+        `http://localhost:5000/shop-owner/delete/${shopOwnerId}`,
+        { method: "DELETE" }
+      );
+
+      if (response.ok) {
+        alert("Profile deleted successfully.");
+        localStorage.removeItem("shopOwner"); // ✅ Remove session
+        navigate("/shop-owner/signin"); // ✅ Redirect to sign-in
+      } else {
+        alert("Failed to delete profile.");
+      }
+    } catch (err) {
+      console.error("Error deleting profile:", err);
+      alert("An error occurred while deleting the profile.");
+    }
+  };
+
   return (
     <div className="shop-owner-profile">
       <h1>Shop Owner Profile</h1>
@@ -115,7 +146,13 @@ const ShopOwnerProfile = () => {
       <div className="shop-owner-info">
         <h2>{shopData.shopName || "Your Shop Name"}</h2>
         <p>
-          <strong>Location:</strong> {shopData.location || "Not set"}
+          <strong>Owner Name:</strong> {shopData.ownerName || "Not Set"}
+        </p>
+        <p>
+          <strong>Email:</strong> {shopData.email || "Not Set"}
+        </p>
+        <p>
+          <strong>Location:</strong> {shopData.location || "Not Set"}
         </p>
         <p>
           <strong>More Info:</strong>{" "}
@@ -128,6 +165,20 @@ const ShopOwnerProfile = () => {
 
       {/* ✅ Update Shop Details Form */}
       <form className="shop-profile-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>Owner Name</label>
+          <input
+            type="text"
+            name="ownerName"
+            value={shopData.ownerName}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Email (Read-Only)</label>
+          <input type="email" name="email" value={shopData.email} readOnly />
+        </div>
         <div className="form-group">
           <label>Shop Name</label>
           <input
@@ -172,7 +223,10 @@ const ShopOwnerProfile = () => {
         Manage My Products
       </button>
 
-      {/* ✅ Display Shop Products */}
+      <button className="btn delete-profile-btn" onClick={handleDeleteProfile}>
+        Delete My Profile
+      </button>
+
       <h2>My Products</h2>
       <div className="products-grid">
         {products.length > 0 ? (
@@ -185,20 +239,6 @@ const ShopOwnerProfile = () => {
               />
               <h3 className="product-name">{product.name}</h3>
               <p className="product-price">{product.price}</p>
-              <button
-                className="btn edit-btn"
-                onClick={() =>
-                  navigate(`/shop-owner/edit-product/${product.id}`)
-                }
-              >
-                Edit
-              </button>
-              <button
-                className="btn delete-btn"
-                onClick={() => alert("Delete function not implemented")}
-              >
-                Delete
-              </button>
             </div>
           ))
         ) : (

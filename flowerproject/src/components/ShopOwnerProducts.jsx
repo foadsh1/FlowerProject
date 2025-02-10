@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "../assets/css/shopOwnerProducts.css"; // Import the new CSS
+import { useNavigate, useParams } from "react-router-dom";
+import "../assets/css/shopOwnerProducts.css"; // ✅ Import CSS
 
 const ShopOwnerProducts = () => {
   const navigate = useNavigate();
-  const storedUser = JSON.parse(localStorage.getItem("user"));
-  const shopOwnerId = storedUser ? storedUser.id : null;
+  const { id } = useParams(); // ✅ Get Shop Owner ID from URL (if needed)
+
+  // ✅ Ensure correct storage key is used
+  const storedUser = JSON.parse(localStorage.getItem("shopOwner"));
+  const shopOwnerId = storedUser ? storedUser.id : id;
 
   const [products, setProducts] = useState([]);
   const [error, setError] = useState("");
@@ -22,6 +25,8 @@ const ShopOwnerProducts = () => {
           `http://localhost:5000/products/shop/${shopOwnerId}`
         );
         const data = await response.json();
+
+        console.log("Fetched Products:", data); // ✅ Debugging Log
 
         if (response.ok) {
           setProducts(data);
@@ -47,7 +52,9 @@ const ShopOwnerProducts = () => {
       );
 
       if (response.ok) {
-        setProducts(products.filter((product) => product.id !== productId));
+        setProducts((prevProducts) =>
+          prevProducts.filter((product) => product.id !== productId)
+        );
       } else {
         setError("Failed to delete product.");
       }
@@ -78,7 +85,7 @@ const ShopOwnerProducts = () => {
                 className="product-image"
               />
               <h3 className="product-name">{product.name}</h3>
-              <p className="product-price">{product.price}</p>
+              <p className="product-price">${product.price}</p>
               <button
                 className="btn edit-btn"
                 onClick={() =>
