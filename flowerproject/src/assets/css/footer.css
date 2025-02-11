@@ -29,6 +29,9 @@
   font-size: 26px;
   font-weight: 700;
 }
+.footer-logo p{
+  color: white;
+}
 
 .footer-links h3,
 .footer-auth h3,
@@ -84,3 +87,8 @@
   margin-top: 20px;
   font-size: 14px;
 }
+
+.footer-bottom p{
+  color: white;
+}
+

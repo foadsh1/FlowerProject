@@ -58,7 +58,7 @@ const ShopDetails = () => {
             </div>
           ))
         ) : (
-          <p className="no-products">No products available from this shop.</p>
+          <p className="no-products">No products available from this shop</p>
         )}
       </div>
     </div>

@@ -40,7 +40,7 @@ const Footer = () => {
           <h3>Account</h3>
           <ul>
             <li>
-              <Link to="/client/signin">Client Login</Link>
+              <Link to="/login">Client Login</Link>
             </li>{" "}
             {/* ✅ Client Login */}
             <li>
@@ -94,7 +94,10 @@ const Footer = () => {
 
       {/* 🌸 Footer Bottom */}
       <div className="footer-bottom">
-        <p>&copy; {new Date().getFullYear()} Flora A Project By Foad & Rabea All Rights Reserved.</p>
+        <p>
+          &copy; {new Date().getFullYear()} Flora A Project By Foad & Rabea All
+          Rights Reserved.
+        </p>
       </div>
     </footer>
   );
