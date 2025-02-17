@@ -3,9 +3,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: #fff0f5;
-  /* Light pink background */
+  min-height: calc(100vh - 120px); /* Adjusts for header and footer */
+  padding: 50px 20px; /* Prevents form from sticking to the edges */
+  background: #fff0f5; /* Light pink background */
 }
 
 .signup-card {

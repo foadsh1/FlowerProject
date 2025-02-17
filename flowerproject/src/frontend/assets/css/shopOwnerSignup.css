@@ -3,11 +3,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: #fff0f5;
-  /* Light pink background */
+  min-height: auto;
+  padding: 80px 20px; /* Prevents overlap with header/footer */
+  background: #fff0f5; /* Light pink background */
+  max-height: 100vh; /* Ensures it does not exceed full viewport height */
+  overflow-y: auto; /* Enables scrolling if content is too large */
 }
 
+/* ✅ Restricting Form Height */
 .shopowner-card {
   background: white;
   padding: 40px;
@@ -16,6 +19,8 @@
   text-align: center;
   max-width: 450px;
   width: 100%;
+  max-height: 90vh; /* Ensures form does not exceed the screen */
+  overflow-y: auto; /* Scrollable if necessary */
 }
 
 /* ✅ Heading */
@@ -124,4 +129,16 @@
 .auth-link a {
   color: #d63384;
   font-weight: bold;
+}
+
+/* ✅ Responsive Fix */
+@media (max-width: 768px) {
+  .shopowner-container {
+    padding: 60px 10px;
+  }
+
+  .shopowner-card {
+    padding: 30px;
+    max-height: 95vh;
+  }
 }
