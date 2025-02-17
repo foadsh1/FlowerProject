@@ -1,7 +1,7 @@
 import React from "react";
-import RoutesFile from "./routes/RoutesFile";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import RoutesFile from "../src/routes/RoutesFile";
+import Navbar from "../src/frontend/components/Navbar";
+import Footer from "../src/frontend/components/Footer";
 
 
 

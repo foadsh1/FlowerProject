@@ -5,31 +5,55 @@ const router = express.Router();
 
 // ✅ User Signup with City, Phone, and Address
 router.post("/signup", async (req, res) => {
-  const { name, email, password, city, phone, address } = req.body;
+  const { name, email, password, shopName, location, image, moreInfo } =
+    req.body;
 
-  if (!name || !email || !password || !city || !phone || !address) {
+  if (
+    !name ||
+    !email ||
+    !password ||
+    !shopName ||
+    !location ||
+    !image ||
+    !moreInfo
+  ) {
     return res.status(400).json({ error: "All fields are required." });
   }
 
+  // 🔹 בדיקת מורכבות הסיסמה
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  if (!passwordRegex.test(password)) {
+    return res.status(400).json({
+      error:
+        "Password must be at least 8 characters long and contain both letters and numbers.",
+    });
+  }
+
   try {
-    // ✅ Hash password before storing
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const sql =
-      "INSERT INTO users (name, email, password, city, phone, address) VALUES (?, ?, ?, ?, ?, ?)";
-    db.query(sql, [name, email, hashedPassword, city, phone, address], (err, result) => {
-      if (err) {
-        if (err.code === "ER_DUP_ENTRY") {
-          return res.status(400).json({ error: "Email already exists." });
+    const sql = `
+      INSERT INTO shop_owners (name, email, password, shop_name, location, image, more_info) 
+      VALUES (?, ?, ?, ?, ?, ?, ?)`;
+
+    db.query(
+      sql,
+      [name, email, hashedPassword, shopName, location, image, moreInfo],
+      (err, result) => {
+        if (err) {
+          if (err.code === "ER_DUP_ENTRY") {
+            return res.status(400).json({ error: "Email already exists." });
+          }
+          return res.status(500).json({ error: "Database error." });
         }
-        return res.status(500).json({ error: "Database error." });
+        res.json({ message: "Shop Owner registered successfully!" });
       }
-      res.json({ message: "User registered successfully." });
-    });
+    );
   } catch (error) {
     res.status(500).json({ error: "Server error." });
   }
 });
+
 
 // ✅ User Signin (Returns City, Phone, and Address)
 router.post("/signin", (req, res) => {

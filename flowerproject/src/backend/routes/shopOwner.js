@@ -22,6 +22,15 @@ router.post("/signup", async (req, res) => {
     return res.status(400).json({ error: "All fields are required." });
   }
 
+  // 🔹 Password must be at least 8 characters long and contain both letters and numbers
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  if (!passwordRegex.test(password)) {
+    return res.status(400).json({
+      error:
+        "Password must be at least 8 characters long and contain both letters and numbers.",
+    });
+  }
+
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -46,6 +55,7 @@ router.post("/signup", async (req, res) => {
     res.status(500).json({ error: "Server error." });
   }
 });
+
 
 // ✅ Shop Owner Sign-In
 router.post("/signin", (req, res) => {

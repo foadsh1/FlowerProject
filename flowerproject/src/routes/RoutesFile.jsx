@@ -1,19 +1,19 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Home from "../components/Home";
-import About from "../components/About";
-import Contact from "../components/ContactForm";
-import Login from "../components/Login";
-import Signup from "../components/signup";
-import ShopOwnerSignin from "../components/ShopOwnerSignin";
-import ShopOwnerSignup from "../components/ShopOwnerSignup";
-import AddProduct from "../components/AddProduct";
-import EditProduct from "../components/EditProduct";
-import FlowerShops from "../components/FlowerShops";
-import ShopOwnerProfile from "../components/ShopOwnerProfile";
-import ShopDetails from "../components/ShopDetails";
-import ShopOwnerProducts from "../components/ShopOwnerProducts";
-import ClientProfile from "../components/ClientProfile";
+import Home from "../frontend/components/Home";
+import About from "../frontend/components/About";
+import Contact from "../frontend/components/ContactForm";
+import Login from "../frontend/components/Login";
+import Signup from "../frontend/components/signup";
+import ShopOwnerSignin from "../frontend/components/ShopOwnerSignin";
+import ShopOwnerSignup from "../frontend/components/ShopOwnerSignup";
+import AddProduct from "../frontend/components/AddProduct";
+import EditProduct from "../frontend/components/EditProduct";
+import FlowerShops from "../frontend/components/FlowerShops";
+import ShopOwnerProfile from "../frontend/components/ShopOwnerProfile";
+import ShopDetails from "../frontend/components/ShopDetails";
+import ShopOwnerProducts from "../frontend/components/ShopOwnerProducts";
+import ClientProfile from "../frontend/components/ClientProfile";
 
 
 const RoutesFile = () => {
